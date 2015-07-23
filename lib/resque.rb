@@ -309,10 +309,15 @@ module Resque
   #
   # If given klass is nil this method will raise a `Resque::NoClassError`
   def validate(klass, queue = nil)
+    p klass
+    p queue
+    
     queue ||= queue_from_class(klass)
+    
+    p queue
 
     if !queue
-      raise NoQueueError.new("Jobs must be placed onto a queue.")
+      raise NoQueueError.new("Jobs must be placed onto a queue. No queue could be inferred for class #{klass}")
     end
 
     if klass.to_s.empty?
